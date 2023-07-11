@@ -234,10 +234,10 @@ namespace MiMFa.Controls.WinForm.Browser
         }
         public ChromiumWebBrowser InitializeBrowser()
         {
-            if ((_Browser == null || _Browser.IsDisposed || !MiMFa.UIL.EverythingPlayer.API.IsInitialized || MiMFa.UIL.EverythingPlayer.API.IsFinalized) && !Statement.IsDesignTime)
+            if ((_Browser == null || _Browser.IsDisposed || !MiMFa.UIL.Player.API.IsInitialized || MiMFa.UIL.Player.API.IsFinalized) && !Statement.IsDesignTime)
             {
-                if (!MiMFa.UIL.EverythingPlayer.API.Initialize())
-                    if (!MiMFa.UIL.EverythingPlayer.API.Initialize()
+                if (!MiMFa.UIL.Player.API.Initialize())
+                    if (!MiMFa.UIL.Player.API.Initialize()
                         && DialogService.ShowMessage(MessageMode.Warning, "Could not initialize browser!" + Environment.NewLine + "Do you want to retry again?") == DialogResult.Yes)
                         return InitializeBrowser();
                 _Browser = new ChromiumWebBrowser(string.Empty
@@ -316,7 +316,7 @@ namespace MiMFa.Controls.WinForm.Browser
                 if (Browser.IsBrowserInitialized) Browser.Load(BasetUrl = url.OriginalString);
                 else
                 {
-                    MiMFa.UIL.EverythingPlayer.API.Initialize();
+                    MiMFa.UIL.Player.API.Initialize();
                     Browser.Load(BasetUrl = url.OriginalString);
                 }
                 ControlService.SetControlThreadSafe(this, a =>

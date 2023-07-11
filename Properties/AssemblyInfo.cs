@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MiMFa Everything Player")]
+[assembly: AssemblyTitle("MiMFa Player")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MiMFa")]
-[assembly: AssemblyProduct("Everything Player")]
-[assembly: AssemblyCopyright("Copyright © MiMFa 2021")]
-[assembly: AssemblyTrademark("MiMFa Everything Player")]
+[assembly: AssemblyProduct("Player")]
+[assembly: AssemblyCopyright("Copyright © MiMFa 2014-2024")]
+[assembly: AssemblyTrademark("MiMFa Player")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
