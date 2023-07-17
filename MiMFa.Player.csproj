@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props')" />
-  <Import Project="..\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props')" />
-  <Import Project="..\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props')" />
+  <Import Project="..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.114.2.12\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.114.2.12\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.114.2.12\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.114.2.12\build\cef.redist.x64.props')" />
   <Import Project="..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props" Condition="Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props')" />
   <Import Project="..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props" Condition="Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props')" />
   <Import Project="..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props" Condition="Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props')" />
@@ -440,9 +440,8 @@
     <Reference Include="AxInterop.WMPLib">
       <HintPath>..\packages\WMPLib.1.0.0\lib\AxInterop.WMPLib.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp, Version=110.0.300.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.Common.110.0.300\lib\net452\CefSharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CefSharp, Version=114.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\packages\CefSharp.Common.114.2.120\lib\net452\CefSharp.dll</HintPath>
     </Reference>
     <Reference Include="CefSharp.BrowserSubprocess">
       <HintPath>..\packages\CefSharp.Common.110.0.300\CefSharp\x86\CefSharp.BrowserSubprocess.exe</HintPath>
@@ -450,8 +449,8 @@
     <Reference Include="CefSharp.BrowserSubprocess.Core">
       <HintPath>..\packages\CefSharp.Common.110.0.300\CefSharp\x86\CefSharp.BrowserSubprocess.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.Core, Version=110.0.300.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.Common.110.0.300\lib\net452\CefSharp.Core.dll</HintPath>
+    <Reference Include="CefSharp.Core, Version=114.2.120.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\packages\CefSharp.Common.114.2.120\lib\net452\CefSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="CefSharp.Core.Runtime">
       <HintPath>..\packages\CefSharp.Common.110.0.300\CefSharp\x86\CefSharp.Core.Runtime.dll</HintPath>
@@ -460,9 +459,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CefSharp.WinForms.110.0.300\lib\net452\CefSharp.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.48.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.48\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="HtmlAgilityPack, Version=1.11.49.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.49\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Interop.WMPLib">
       <HintPath>..\packages\WMPLib.1.0.0\lib\Interop.WMPLib.dll</HintPath>
@@ -510,10 +508,10 @@
     <Error Condition="!Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props'))" />
     <Error Condition="!Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets'))" />
-    <Error Condition="!Exists('..\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.110.0.30\build\cef.redist.x64.props'))" />
-    <Error Condition="!Exists('..\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.110.0.30\build\cef.redist.x86.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x64.114.2.12\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.114.2.12\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.114.2.12\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.114.2.12\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.targets'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets')" />
   <Import Project="..\packages\CefSharp.Common.94.4.110\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.94.4.110\build\CefSharp.Common.targets')" />
@@ -521,5 +519,5 @@
   <Import Project="..\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets')" />
   <Import Project="E:\My Work\Commercial Project\Entity\Green Goals\EIA+\Software\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets" Condition="Exists('E:\My Work\Commercial Project\Entity\Green Goals\EIA+\Software\packages\CefSharp.Common.107.1.90\build\CefSharp.Common.targets')" />
   <Import Project="..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets" Condition="Exists('..\..\..\..\Software\Desktop\MiMFa DataLab\MiMFa DataLab\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets')" />
-  <Import Project="..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.110.0.300\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.114.2.120\build\CefSharp.Common.targets')" />
 </Project>

@@ -71,7 +71,7 @@
         <member name="F:CefSharp.WinForms.ChromiumWebBrowser.parkingControl">
             <summary>
             Parking control used to temporarily host the CefBrowser instance
-            when <see cref="!:RecreatingHandle"/> is <c>true</c>.
+            when <see cref="P:System.Windows.Forms.Control.RecreatingHandle"/> is <c>true</c>.
             </summary>
         </member>
         <member name="F:CefSharp.WinForms.ChromiumWebBrowser.initialFocus">
@@ -97,7 +97,7 @@
             Activates browser upon creation, the default value is false. Prior to version 73
             the default behaviour was to activate browser on creation (Equivalent of setting this property to true).
             To restore this behaviour set this value to true immediately after you create the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/> instance.
-            https://bitbucket.org/chromiumembedded/cef/issues/1856/branch-2526-cef-activates-browser-window
+            https://github.com/chromiumembedded/cef/issues/1856
             </summary>
         </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.RequestContext">
@@ -1309,17 +1309,6 @@
             </summary>
             <param name="width">width</param>
             <param name="height">height</param>
-        </member>
-        <member name="M:CefSharp.WinForms.Host.ChromiumHostControlBase.ResizeBrowserInternal(System.Int32,System.Int32)">
-            <summary>
-            Resizes the browser.
-            </summary>
-            <param name="width">width</param>
-            <param name="height">height</param>
-            <remarks>
-            To avoid the Designer trying to load CefSharp.Core.Runtime we explicitly
-            ask for NoInlining.
-            </remarks>
         </member>
         <member name="M:CefSharp.WinForms.Host.ChromiumHostControlBase.HideInternal">
             <summary>

@@ -253,13 +253,6 @@ Returns true if called on the specified CEF thread.
 </summary>
             <returns>Returns true if called on the specified thread.</returns>
         </member>
-        <member name="M:CefSharp.Core.Cef.EnableHighDPISupport">
-            <summary>
-Call during process startup to enable High-DPI support on Windows 7 or newer.
-Older versions of Windows should be left DPI-unaware because they do not
-support DirectWrite and GDI fonts are kerned very badly.
-</summary>
-        </member>
         <member name="M:CefSharp.Core.Cef.ClearSchemeHandlerFactories">
             <summary>
 Clear all scheme handler factories registered with the global request context.
@@ -736,7 +729,7 @@ Configuration can still be specified using CEF data structures or by adding to C
 **Experimental**
 Set to true to enable use of the Chrome runtime in CEF. This feature is
 considered experimental and is not recommended for most users at this time.
-See issue https://bitbucket.org/chromiumembedded/cef/issues/2969/support-chrome-windows-with-cef-callbacks for details.
+See issue https://github.com/chromiumembedded/cef/issues/2969
 </summary>
         </member>
         <member name="P:CefSharp.Core.CefSettingsBase.CefCommandLineArgs">
@@ -1615,13 +1608,13 @@ True if there are remaining command line arguments.
 </member>
         <member name="M:CefCommandLine.AppendSwitchWithValue(CefStringBase&lt;CefStringTraitsUTF16&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,CefStringBase&lt;CefStringTraitsUTF16&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 
-Add a switch with the specified value to the end of the command line.
+Add a switch with the specified value to the end of the command line. If
+the switch has no value pass an empty value string.
 
 </member>
         <member name="M:CefCommandLine.AppendSwitch(CefStringBase&lt;CefStringTraitsUTF16&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 
-Add a switch to the end of the command line. If the switch has no value
-pass an empty value string.
+Add a switch to the end of the command line.
 
 </member>
         <member name="M:CefCommandLine.GetSwitches(std.map&lt;CefStringBase&lt;CefStringTraitsUTF16&gt;,CefStringBase&lt;CefStringTraitsUTF16&gt;,std.less&lt;CefStringBase&lt;CefStringTraitsUTF16&gt;&gt;,std.allocator&lt;std.pair&lt;CefStringBase&lt;CefStringTraitsUTF16&gt;!System.Runtime.CompilerServices.IsConst,CefStringBase&lt;CefStringTraitsUTF16&gt;&gt;&gt;&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
@@ -4846,6 +4839,36 @@ class will be called on the browser process UI thread unless otherwise
 indicated.
 
 </member>
+        <member name="M:CefCommandHandler.IsChromeToolbarButtonVisible(cef_chrome_toolbar_button_type_t)">
+
+Called during browser creation to check if a Chrome toolbar button
+should be visible. Only called for buttons that would be visible by
+default. Only used with the Chrome runtime.
+
+</member>
+        <member name="M:CefCommandHandler.IsChromePageActionIconVisible(cef_chrome_page_action_icon_type_t)">
+
+Called during browser creation to check if a Chrome page action icon
+should be visible. Only called for icons that would be visible by default.
+Only used with the Chrome runtime.
+
+</member>
+        <member name="M:CefCommandHandler.IsChromeAppMenuItemEnabled(scoped_refptr&lt;CefBrowser&gt;,System.Int32)">
+
+Called to check if a Chrome app menu item should be enabled. Values for
+|command_id| can be found in the cef_command_ids.h file. Only called for
+menu items that would be enabled by default. Only used with the Chrome
+runtime.
+
+</member>
+        <member name="M:CefCommandHandler.IsChromeAppMenuItemVisible(scoped_refptr&lt;CefBrowser&gt;,System.Int32)">
+
+Called to check if a Chrome app menu item should be visible. Values for
+|command_id| can be found in the cef_command_ids.h file. Only called for
+menu items that would be visible by default. Only used with the Chrome
+runtime.
+
+</member>
         <member name="M:CefCommandHandler.OnChromeCommand(scoped_refptr&lt;CefBrowser&gt;,System.Int32,cef_window_open_disposition_t)">
 
 Called to execute a Chrome command triggered via menu selection or
@@ -6837,11 +6860,6 @@ Asynchronously retrieves device info.
 Returns the icon type for this sink.
 
 </member>
-        <member name="M:CefMediaSink.GetDescription">
-
-Returns the description of this sink.
-
-</member>
         <member name="M:CefMediaSink.GetName">
 
 Returns the name of this sink.
@@ -7488,23 +7506,15 @@ required.
         <member name="M:CefFrame.CreateURLRequest(scoped_refptr&lt;CefRequest&gt;,scoped_refptr&lt;CefURLRequestClient&gt;)">
 
 Create a new URL request that will be treated as originating from this
-frame and the associated browser. This request may be intercepted by the
-client via CefResourceRequestHandler or CefSchemeHandlerFactory. Use
-CefURLRequest::Create instead if you do not want the request to have this
-association, in which case it may be handled differently (see
-documentation on that method). Requests may originate from both the
-browser process and the render process.
-
-For requests originating from the browser process:
+frame and the associated browser. Use CefURLRequest::Create instead if you
+do not want the request to have this association, in which case it may be
+handled differently (see documentation on that method). A request created
+with this method may only originate from the browser process, and will
+behave as follows:
+  - It may be intercepted by the client via CefResourceRequestHandler or
+    CefSchemeHandlerFactory.
   - POST data may only contain a single element of type PDE_TYPE_FILE or
     PDE_TYPE_BYTES.
-
-For requests originating from the render process:
-  - POST data may only contain a single element of type PDE_TYPE_BYTES.
-  - If the response contains Content-Disposition or Mime-Type header
-    values that would not normally be rendered then the response may
-    receive special handling inside the browser (for example, via the
-    file download code path instead of the URL request code path).
 
 The |request| object will be marked as read-only after calling this
 method.
@@ -9294,13 +9304,6 @@ Set to true before calling Windows APIs like TrackPopupMenu that enter a
 modal message loop. Set to false after exiting the modal message loop.
 
 </member>
-        <member name="M:CefEnableHighDPISupport">
-
-Call during process startup to enable High-DPI support on Windows 7 or
-newer. Older versions of Windows should be left DPI-unaware because they do
-not support DirectWrite and GDI fonts are kerned very badly.
-
-</member>
         <member name="M:CefRunWinMainWithPreferredStackSize(=FUNC:System.Int32(HINSTANCE__*,HINSTANCE__*,System.Char*,System.Int32),HINSTANCE__*,System.Char*,System.Int32)">
 
 Run the main thread on 32-bit Windows using a fiber with the preferred 4MiB
@@ -9368,13 +9371,6 @@ Class representing CefExecuteProcess arguments.
 
 Set to true (1) before calling Windows APIs like TrackPopupMenu that enter a
 modal message loop. Set to false (0) after exiting the modal message loop.
-
-</member>
-        <member name="M:cef_enable_highdpi_support">
-
-Call during process startup to enable High-DPI support on Windows 7 or
-newer. Older versions of Windows should be left DPI-unaware because they do
-not support DirectWrite and GDI fonts are kerned very badly.
 
 </member>
         <member name="M:cef_run_winmain_with_preferred_stack_size(=FUNC:System.Int32(HINSTANCE__*,HINSTANCE__*,System.Char*,System.Int32),HINSTANCE__*,System.Char*,System.Int32)">
@@ -9493,6 +9489,107 @@ Class representing a rectangle.
 
 Class representing a point.
 
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_CRASH">
+The browser crashed.
+Internal use only:  resume pending downloads if possible.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN">
+The user shut down the browser.
+Internal use only:  resume pending downloads if possible.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_USER_CANCELED">
+The user canceled the download.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_CROSS_ORIGIN_REDIRECT">
+An unexpected cross-origin redirect happened.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH">
+The server sent fewer bytes than the content-length header. It may
+indicate that the connection was closed prematurely, or the Content-Length
+header was invalid. The download is only interrupted if strong validators
+are present. Otherwise, it is treated as finished.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_UNREACHABLE">
+Unexpected server response. This might indicate that the responding server
+may not be the intended server.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN">
+Server access forbidden.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_CERT_PROBLEM">
+Server certificate problem.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_UNAUTHORIZED">
+Server didn't authorize access to resource.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_BAD_CONTENT">
+The server does not have the requested data.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE">
+The server does not support range requests.
+Internal use only:  must restart from the beginning.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED">
+The server indicates that the operation has failed (generic).
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST">
+The network request was invalid. This may be due to the original URL or a
+redirected URL:
+- Having an unsupported scheme.
+- Being an invalid URL.
+- Being disallowed by policy.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_NETWORK_SERVER_DOWN">
+The server has gone down.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_NETWORK_DISCONNECTED">
+The network connection has been lost.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_NETWORK_TIMEOUT">
+The network operation timed out.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED">
+Generic network failure.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_SAME_AS_SOURCE">
+The source and the target of the download were the same.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_HASH_MISMATCH">
+The partial file didn't match the expected hash.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT">
+An attempt was made to seek past the end of a file in opening
+a file (as part of resuming a previously interrupted download).
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_SECURITY_CHECK_FAILED">
+An attempt to check the safety of the download failed due to unexpected
+reasons. See http://crbug.com/153212.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_BLOCKED">
+The file was blocked due to local policy.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_TRANSIENT_ERROR">
+The file was in use. Too many files are opened at once. We have run out of
+memory.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_VIRUS_INFECTED">
+The file contains a virus.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_TOO_LARGE">
+The file is too large for the file system to handle.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_NAME_TOO_LONG">
+The directory or file name is too long.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_NO_SPACE">
+There is not enough room on the drive.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_ACCESS_DENIED">
+The file cannot be accessed due to security restrictions.
+</member>
+        <member name="F:CEF_DOWNLOAD_INTERRUPT_REASON_FILE_FAILED">
+Generic file operation failure.
 </member>
         <member name="F:CEF_PREFERENCES_TYPE_REQUEST_CONTEXT">
 Request context preferences registered each time a new CefRequestContext
@@ -11884,33 +11981,33 @@ Structure representing a rectangle.
 Structure representing a point.
 
 </member>
-        <member name="M:cef_string_list_copy(System.Void*)">
+        <member name="M:cef_string_list_copy(_cef_string_list_t*)">
 
 Creates a copy of an existing string list.
 
 </member>
-        <member name="M:cef_string_list_free(System.Void*)">
+        <member name="M:cef_string_list_free(_cef_string_list_t*)">
 
 Free the string list.
 
 </member>
-        <member name="M:cef_string_list_clear(System.Void*)">
+        <member name="M:cef_string_list_clear(_cef_string_list_t*)">
 
 Clear the string list.
 
 </member>
-        <member name="M:cef_string_list_append(System.Void*,_cef_string_utf16_t!System.Runtime.CompilerServices.IsConst*)">
+        <member name="M:cef_string_list_append(_cef_string_list_t*,_cef_string_utf16_t!System.Runtime.CompilerServices.IsConst*)">
 
 Append a new value at the end of the string list.
 
 </member>
-        <member name="M:cef_string_list_value(System.Void*,System.UInt32,_cef_string_utf16_t*)">
+        <member name="M:cef_string_list_value(_cef_string_list_t*,System.UInt32,_cef_string_utf16_t*)">
 
 Retrieve the value at the specified zero-based string list index. Returns
 true (1) if the value was successfully retrieved.
 
 </member>
-        <member name="M:cef_string_list_size(System.Void*)">
+        <member name="M:cef_string_list_size(_cef_string_list_t*)">
 
 Return the number of elements in the string list.
 
@@ -11920,7 +12017,7 @@ Return the number of elements in the string list.
 Allocate a new string map.
 
 </member>
-        <member name="D:cef_string_list_t">
+        <member name="T:_cef_string_list_t">
 
 CEF string maps are a set of key/value string pairs.
 
@@ -12681,13 +12778,31 @@ Returns a simple speed estimate in bytes/s.
 Returns a simple speed estimate in bytes/s.
 
 </member>
+        <member name="M:CefDownloadItem.GetInterruptReason">
+
+Returns the most recent interrupt reason.
+
+
+
+Returns the most recent interrupt reason.
+
+</member>
+        <member name="M:CefDownloadItem.IsInterrupted">
+
+Returns true if the download has been interrupted.
+
+
+
+Returns true if the download has been interrupted.
+
+</member>
         <member name="M:CefDownloadItem.IsCanceled">
 
-Returns true if the download has been canceled or interrupted.
+Returns true if the download has been canceled.
 
 
 
-Returns true if the download has been canceled or interrupted.
+Returns true if the download has been canceled.
 
 </member>
         <member name="M:CefDownloadItem.IsComplete">
