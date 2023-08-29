@@ -22,6 +22,7 @@ using CefSharp.DevTools.Page;
 using CefSharp.Internals;
 using MiMFa.Model.IO;
 using MiMFa.Engine.Template;
+using System.Text.RegularExpressions;
 
 namespace MiMFa.Controls.WinForm.Browser
 {
@@ -363,6 +364,45 @@ namespace MiMFa.Controls.WinForm.Browser
             string path = Config.TemporaryDirectory + System.DateTime.Now.Ticks + ".html";
             try
             {
+                if (!string.IsNullOrWhiteSpace(html))
+                {
+                    var palette = Default.HasTemplator ? Default.Templator.Palette : new CustomPalette(BackColor,ForeColor,Font);
+                    html = Regex.Replace(html, "(\\<head[\\s\\S]*\\>)", "$1" +
+                          $@"<style>
+                            :root{{
+                                --Palette-BackColor: #{ConvertService.ToHexaDecimal(palette.BackColor)};
+                                --Palette-ForeColor: #{ConvertService.ToHexaDecimal(palette.ForeColor)};
+                                --Palette-LabelBackColor: #{ConvertService.ToHexaDecimal(palette.LabelBackColor)};
+                                --Palette-LabelForeColor: #{ConvertService.ToHexaDecimal(palette.LabelForeColor)};
+                                --Palette-MenuBackColor: #{ConvertService.ToHexaDecimal(palette.MenuBackColor)};
+                                --Palette-MenuForeColor: #{ConvertService.ToHexaDecimal(palette.MenuForeColor)};
+                                --Palette-ButtonBackColor: #{ConvertService.ToHexaDecimal(palette.ButtonBackColor)};
+                                --Palette-ButtonForeColor: #{ConvertService.ToHexaDecimal(palette.ButtonForeColor)};
+                                --Palette-InputBackColor: #{ConvertService.ToHexaDecimal(palette.InputBackColor)};
+                                --Palette-InputForeColor: #{ConvertService.ToHexaDecimal(palette.InputForeColor)};
+                                --Palette-SpecialBackColor: #{ConvertService.ToHexaDecimal(palette.SpecialBackColor)};
+                                --Palette-SpecialForeColor: #{ConvertService.ToHexaDecimal(palette.SpecialForeColor)};
+                                --Palette-FirstSpecialBackColor: #{ConvertService.ToHexaDecimal(palette.FirstSpecialBackColor)};
+                                --Palette-FirstSpecialForeColor: #{ConvertService.ToHexaDecimal(palette.FirstSpecialForeColor)};
+                                --Palette-SecondSpecialBackColor: #{ConvertService.ToHexaDecimal(palette.SecondSpecialBackColor)};
+                                --Palette-SecondSpecialForeColor: #{ConvertService.ToHexaDecimal(palette.SecondSpecialForeColor)};
+                                --Palette-ThirdSpecialBackColor: #{ConvertService.ToHexaDecimal(palette.ThirdSpecialBackColor)};
+                                --Palette-ThirdSpecialForeColor: #{ConvertService.ToHexaDecimal(palette.ThirdSpecialForeColor)};
+                                --Palette-Font: {ConvertService.ToString(palette.Font)};
+                                --Palette-LabelFont: {ConvertService.ToString(palette.LabelFont)};
+                                --Palette-MenuFont: {ConvertService.ToString(palette.MenuFont)};
+                                --Palette-ButtonFont: {ConvertService.ToString(palette.ButtonFont)};
+                                --Palette-InputFont: {ConvertService.ToString(palette.InputFont)};
+                                --Palette-SmallFont: {ConvertService.ToString(palette.SmallFont)};
+                                --Palette-BigFont: {ConvertService.ToString(palette.BigFont)};
+                                --Palette-SpecialFont: {ConvertService.ToString(palette.SpecialFont)};
+                            }}
+                            body{{
+                                background-color: #{ConvertService.ToHexaDecimal(palette.BackColor)};
+                                color: #{ConvertService.ToHexaDecimal(palette.ForeColor)};
+                            }}
+                        </style>");
+                }
                 System.IO.File.WriteAllText(path, html);
                 this.Browser.Load(path);
             }
@@ -377,7 +417,7 @@ namespace MiMFa.Controls.WinForm.Browser
         }
         public virtual string LoadObject(Exception ex)
         {
-            return LoadHTML("<html><body style='color:red;padding:45% 5%;text-align: center;'>" + ex.Message + "</body></html>");
+            return LoadHTML("<html><body style='color:red; padding:45% 5%;text-align: center;'>" + ex.Message + "</body></html>");
         }
         public virtual string LoadDocument(HtmlAgilityPack.HtmlDocument htmlElements)
         {

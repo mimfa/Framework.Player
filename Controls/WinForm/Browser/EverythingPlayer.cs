@@ -31,8 +31,10 @@ namespace MiMFa.Controls.WinForm.Browser
         public bool AutoStart {  get; set;  } = false;
         public bool SpecialView { get; set; } = true;
 
-        string StartHTML = "<html style='width:100%; overflow-x:hidden;'><head><meta charset='UTF-8'/></head><body style='width:100%; overflow-x:hidden;'>";
-        string ShowSimplyStartHTML = @"<html style='width:100%; overflow-x:hidden; overflow-y:hidden;'><head><meta charset='UTF-8'/>
+        public string StartHTML { get; set; } = "<html style='width:100%; overflow-x:hidden;'><head><meta charset='UTF-8'/></head><body style='width:100%; overflow-x:hidden;'>";
+        public string SimpleStartHTML
+        {
+            get => _SimpleStartHTML ?? @"<html style='width:100%; overflow-x:hidden; overflow-y:hidden;'><head><meta charset='UTF-8'/>
                 <style>
                     body {
 	                padding: 0;
@@ -42,7 +44,7 @@ namespace MiMFa.Controls.WinForm.Browser
 	                font-size: 100%;
 	                vertical-align: baseline;
                     text-align:center;
-	                background: transparent;
+	                " + (Default.HasTemplator ? $"background-color: #{ConvertService.ToHexaDecimal(Default.Templator.Palette.BackColor)}; color: #{ConvertService.ToHexaDecimal(Default.Templator.Palette.ForeColor)};" : "background: transparent;") + @"
 	                line-height: 1;
                     width:100%;
                     overflow-x:hidden;
@@ -51,7 +53,10 @@ namespace MiMFa.Controls.WinForm.Browser
                 }
                 </style>
 </head><body>";
-        string EndHTML = "</body></html>";
+            set => _SimpleStartHTML = value;
+        }
+        private string _SimpleStartHTML = null;
+        public string EndHTML = " </body></html>";
         public EverythingPlayer()
         {
             InitializeComponent();
@@ -219,7 +224,7 @@ namespace MiMFa.Controls.WinForm.Browser
             Clear();
             Value = value;
             PWB.Visible = true;
-            PWB.LoadHTML(((SpecialView && inCenter) ? ShowSimplyStartHTML:StartHTML) + tag + EndHTML);
+            PWB.LoadHTML(((SpecialView && inCenter) ? SimpleStartHTML:StartHTML) + tag + EndHTML);
             //ControlService.WebBrowserDocument(ref WB, ((SpecialView && inCenter) ? ShowSimplyStartHTML:StartHTML) + tag + EndHTML);
             ValueChanged(this, EventArgs.Empty);
         }
@@ -242,7 +247,7 @@ namespace MiMFa.Controls.WinForm.Browser
             Clear();
             Value = value;
             WB.Show();
-            ControlService.WebBrowserDocument(ref WB, ((SpecialView && inCenter) ? ShowSimplyStartHTML:StartHTML) + tag + EndHTML);
+            ControlService.WebBrowserDocument(ref WB, ((SpecialView && inCenter) ? SimpleStartHTML:StartHTML) + tag + EndHTML);
             ValueChanged(this, EventArgs.Empty);
         }
         public void LoadDirectory(string url)
