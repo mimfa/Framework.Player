@@ -511,6 +511,10 @@
       <Project>{adc72cd2-885e-442a-983e-0ba87b7234ef}</Project>
       <Name>MiMFa</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Windows\MiMFa.Windows.csproj">
+      <Project>{ef653621-5421-48ea-be2f-d9194ff71c08}</Project>
+      <Name>MiMFa.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AxInterop.WMPLib">
